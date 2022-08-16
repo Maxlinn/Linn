@@ -1,48 +1,61 @@
 import (
     "io.*",
-    "ipt.*"
-    # "@std.io" when don't conflict with current dir
+    "ds.*",  # common data structures like dict, list, set
+    "github.com/cool/package" as utils,  # import remote package or module
 )
 
-# by default, all functions and classes are exported
-# add single _ to hide to same package
-# add double _ to hide to everything else
-# but actually, there are no restrictions
-
-class Man extends (Human){
-    _dick_length :float;
-
+# by default, all functions and classes are exported, add _ in the front to hide
+class Man extends(Human){
+    _dick_length: float
     fn __init__() = default;
-
-    # don't export
-    fn __wank();
+    fn __wank();  # don't export
 }
 
-# declare an array of chars
-s :char.[] = "114514";
+s: char.[] = "114514"  # declare an array of chars
+amount: int | float | complex  # compound type
+result: bool?  # optional
+type fp = fn(int, int) -> int  # type definition
+d = dict!`a : b, c : d;`
 
-# compound type
-amount :int | float | complex;
+# simple functions
+@throws(ZeroDivideException)
+fn divide(a :float, b: float) -> float{
+    return a / b;
+}
 
-# any type
-v :?;
+# named return value, can be later called, like main().ret_code!
+# can be used when return tuple
+# attr is like python argparse.namespace
+@throws(null)
+fn divmod(a :int.& `first operator` attr!`in, json_dump:omit_empty`, 
+          b :int.& `second operator` attr!`in, json_dump:omit_empty`) 
+          -> (quotient: int, remainder: int){
+    quotient :int = a / b;
+    remainder :int = a % b;
+    return (quotient, remainder);
+}
 
-# function pointer
-type fp = fn(int, int)->int;
-
-# literal
-# define class.__`__ to implement
-timeout = time_span`10s`;
-
+# literal, implement class.__`__
+timeout = time_span!`10s`
 
 fn __main__(
-    args :int `number of arguments`,
-    argv :char.&.& `arrays of arguments`
-    ) -> ret_code :int `return code to OS` {
+    args: int `number of arguments`,
+    argv: char.&.& `arrays of arguments`
+) -> ret_code: int `code to OS` {
 
-    for(const char.& p = s; p.* ; p += 1){
+    for(p: char. &= s; p.*; p += 1){
+        # by default pass by value
+        # .& means get pointer
+        # .$ means reference (lvalue)
+        # .* means deference
+        # .(type) means explicit type cast
+
         char ch = p.*;
-        io.print(ch);
-    }
+        # char and strings are distinguished
+        io.print(ch.(int), end="\r\n"); }
+
+    sorted!(s, s + s.len!, fn![args, argv.$](int.$ a, int.$ b){
+        return a < b;});
+
     return 0;
 }
