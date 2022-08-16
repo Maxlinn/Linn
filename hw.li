@@ -6,7 +6,7 @@ import (
 
 # by default, all functions and classes are exported, add _ in the front to hide
 class Man extends(Human){
-    _dick_length: float
+    _dick_length: float @dump:omit_empty;
     fn __init__() = default;
     fn __wank();  # don't export
 }
@@ -27,8 +27,8 @@ fn divide(a :float, b: float) -> float{
 # can be used when return tuple
 # attr is like python argparse.namespace
 @throws(null)
-fn divmod(a :int.& `first operator` attr!`in, json_dump:omit_empty`, 
-          b :int.& `second operator` attr!`in, json_dump:omit_empty`) 
+fn divmod(a :int.& `first operator` @in, 
+          b :int.& `second operator` @in) 
           -> (quotient: int, remainder: int){
     quotient :int = a / b;
     remainder :int = a % b;
