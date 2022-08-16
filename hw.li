@@ -1,6 +1,6 @@
 import (
-    "io.*",
-    "ds.*",  # common data structures like dict, list, set
+    "io" all,
+    "ds" all,  # common data structures like dict, list, set
     "github.com/cool/package" as utils,  # import remote package or module
 )
 
@@ -11,10 +11,10 @@ class Man extends(Human){
     fn __wank();  # don't export
 }
 
-s: char.[] = "114514"  # declare an array of chars
-amount: int | float | complex  # compound type
-result: bool?  # optional
-type fp = fn(int, int) -> int  # type definition
+s: char.[] = "114514";  # declare an array of chars
+amount: int | float | complex;  # compound type
+result: bool?;  # optional
+type fp = fn(int, int) -> int;  # type definition
 d = dict!`a : b, c : d;`
 
 # simple functions
@@ -56,6 +56,8 @@ fn __main__(
 
     sorted!(s, s + s.len!, fn![args, argv.$](int.$ a, int.$ b){
         return a < b;});
+
+    if!(result, true=fn(){io.print("success")}, false=fn(){io.print("failed")});
 
     return 0;
 }
