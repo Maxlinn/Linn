@@ -22,10 +22,10 @@ class Man extends (Human){
 s :char.[] = "114514";
 
 # compound type
-number :{int | float | complex};
+amount :int | float | complex;
 
 # any type
-v = dict`{}`;
+v :?;
 
 # function pointer
 type fp = fn(int, int)->int;
@@ -35,7 +35,7 @@ type fp = fn(int, int)->int;
 timeout = time_span`10s`;
 
 
-fn __main(
+fn __main__(
     args :int `number of arguments`,
     argv :char.&.& `arrays of arguments`
     ) -> ret_code :int `return code to OS` {
